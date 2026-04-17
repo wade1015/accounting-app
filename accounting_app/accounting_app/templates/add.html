@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新增記帳</title>
+</head>
+<script>
+const today = new Date().toISOString().split('T')[0];
+document.getElementById("dateInput").value = today;
+</script>
+<body>
+
+<h1>新增記錄</h1>
+
+<form method="POST">
+    <label>類型：</label>
+    <select name="type">
+        <option value="income">收入</option>
+        <option value="expense">支出</option>
+    </select>
+    <br><br>
+    <label>日期：</label>
+    <input type="date" name="created_at" id="dateInput">
+    <br><br>
+    <label>分類：</label>
+    <select name="category">
+        <option value="餐飲">餐飲</option>
+        <option value="材料">材料</option>
+        <option value="房租">房租</option>
+        <option value="薪資">薪資</option>
+        <option value="其他">其他</option>
+    </select>
+    <br><br>
+
+    <label>金額：</label>
+    <input type="number" name="amount" id="timeInput">
+    <br><br>
+
+    <label>備註：</label>
+    <input type="text" name="note">
+    <br><br>
+
+    <button type="submit">送出</button>
+</form>
+
+<a href="/">回首頁</a>
+<script>
+const now = new Date();
+now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+
+document.getElementById("timeInput").value = now.toISOString().slice(0,16);
+</script>
+</body>
+</html>
