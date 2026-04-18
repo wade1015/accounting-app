@@ -85,6 +85,7 @@
         }
 
         input,
+        select,
         button,
         a {
             font: inherit;
@@ -92,14 +93,17 @@
 
         input {
             width: 100%;
+            min-width: 0;
+            max-width: 100%;
             padding: 12px 14px;
             border-radius: 12px;
             border: 1px solid var(--border);
             background: #fff;
             color: var(--text);
         }
-
-        input:focus {
+        
+        input:focus,
+        select:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(176, 137, 104, 0.15);
@@ -220,7 +224,42 @@
 
                     <div class="field">
                         <label for="time">時間</label>
-                        <input type="time" name="time" id="time">
+                        <select name="time" id="time" required>
+                            <option value="">請選擇時間</option>
+                            <option value="06:30">上午 06:30</option>
+                            <option value="07:00">上午 07:00</option>
+                            <option value="07:30">上午 07:30</option>
+                            <option value="08:00">上午 08:00</option>
+                            <option value="08:30">上午 08:30</option>
+                            <option value="09:00">上午 09:00</option>
+                            <option value="09:30">上午 09:30</option>
+                            <option value="10:00">上午 10:00</option>
+                            <option value="10:30">上午 10:30</option>
+                            <option value="11:00">上午 11:00</option>
+                            <option value="11:30">上午 11:30</option>
+                            <option value="12:00">中午 12:00</option>
+                            <option value="12:30">中午 12:30</option>
+                            <option value="13:00">下午 01:00</option>
+                            <option value="13:30">下午 01:30</option>
+                            <option value="14:00">下午 02:00</option>
+                            <option value="14:30">下午 02:30</option>
+                            <option value="15:00">下午 03:00</option>
+                            <option value="15:30">下午 03:30</option>
+                            <option value="16:00">下午 04:00</option>
+                            <option value="16:30">下午 04:30</option>
+                            <option value="17:00">下午 05:00</option>
+                            <option value="17:30">下午 05:30</option>
+                            <option value="18:00">下午 06:00</option>
+                            <option value="18:30">下午 06:30</option>
+                            <option value="19:00">晚上 07:00</option>
+                            <option value="19:30">晚上 07:30</option>
+                            <option value="20:00">晚上 08:00</option>
+                            <option value="20:30">晚上 08:30</option>
+                            <option value="21:00">晚上 09:00</option>
+                            <option value="21:30">晚上 09:30</option>
+                            <option value="22:00">晚上 10:00</option>
+                            <option value="22:30">晚上 10:30</option>
+                        </select>
                     </div>
 
                     <div class="field-full">
