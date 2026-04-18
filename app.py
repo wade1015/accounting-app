@@ -112,9 +112,30 @@ def index():
 
     income = sum(r.amount for r in data if r.type == "income")
     expense = sum(r.amount for r in data if r.type == "expense")
-    months = []
-    income_list = []
-    expense_list = []
+
+    # =========================
+    # 📊 月報表（核心修正）
+    # =========================
+    from collections import defaultdict
+
+    income_map = defaultdict(int)
+    expense_map = defaultdict(int)
+
+    for r in data:
+        if not r.created_at:
+            continue
+
+        month = r.created_at[:7]  # YYYY-MM
+
+        if r.type == "income":
+            income_map[month] += r.amount
+        else:
+            expense_map[month] += r.amount
+
+    months = sorted(set(income_map.keys()) | set(expense_map.keys()))
+
+    income_list = [income_map[m] for m in months]
+    expense_list = [expense_map[m] for m in months]
 
     return render_template(
         "index.html",
