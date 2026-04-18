@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = "your_secret_key"
 
 # 🔥 PostgreSQL 連線
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("postgresql://accounting_db_185h_user:dtJzvn9bAH3PdwU6WvSuMSJfTSfWR3PR@dpg-d7hj74gsfn5c73ea5uk0-a/accounting_db_185h")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
