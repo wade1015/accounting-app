@@ -1,20 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<title>註冊</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊</title>
+    <style>
+        :root {
+            --bg: #f7f1e8;
+            --card: #fffdf9;
+            --text: #4b4036;
+            --muted: #8a7f74;
+            --border: #e5d8c7;
+            --accent: #b08968;
+            --accent-dark: #8f6b4f;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 460px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: 0 8px 24px rgba(111, 88, 63, 0.08);
+            padding: 28px 24px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+        }
+
+        p {
+            margin: 0 0 24px;
+            color: var(--muted);
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(176, 137, 104, 0.15);
+        }
+
+        button,
+        a {
+            font: inherit;
+        }
+
+        button {
+            width: 100%;
+            min-height: 46px;
+            border: none;
+            border-radius: 12px;
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            background: var(--accent-dark);
+        }
+
+        .link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+    <div class="card">
+        <h1>註冊</h1>
+        <p>建立新帳號，開始管理你的記帳與預約資料。</p>
 
-<h1>註冊</h1>
+        <form method="POST">
+            <div class="field">
+                <label for="username">帳號</label>
+                <input type="text" name="username" id="username" placeholder="請輸入帳號">
+            </div>
 
-<form method="POST">
-    帳號：<input type="text" name="username"><br><br>
-    密碼：<input type="password" name="password"><br><br>
-    <button type="submit">註冊</button>
-</form>
+            <div class="field">
+                <label for="password">密碼</label>
+                <input type="password" name="password" id="password" placeholder="請輸入密碼">
+            </div>
 
-<a href="/login">已有帳號？登入</a>
+            <button type="submit">註冊</button>
+        </form>
 
+        <a href="/login" class="link">已有帳號？前往登入</a>
+    </div>
 </body>
 </html>
