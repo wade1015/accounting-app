@@ -1,54 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新增記帳</title>
+    <style>
+        :root {
+            --bg: #f7f1e8;
+            --card: #fffdf9;
+            --text: #4b4036;
+            --muted: #8a7f74;
+            --border: #e5d8c7;
+            --accent: #b08968;
+            --accent-dark: #8f6b4f;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
+            padding: 20px 12px;
+        }
+
+        .page {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(111, 88, 63, 0.08);
+            padding: 24px;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: clamp(1.8rem, 3vw, 2.3rem);
+        }
+
+        .subtitle {
+            margin: 0 0 24px;
+            color: var(--muted);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .field,
+        .field-full {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field-full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input,
+        select,
+        button,
+        a {
+            font: inherit;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--text);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(176, 137, 104, 0.15);
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: none;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #efe4d7;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 14px 10px;
+            }
+
+            .card {
+                padding: 18px;
+                border-radius: 16px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
-<script>
-const today = new Date().toISOString().split('T')[0];
-document.getElementById("dateInput").value = today;
-</script>
 <body>
+    <div class="page">
+        <div class="card">
+            <h1>新增記錄</h1>
+            <p class="subtitle">快速新增收入或支出，欄位大小與間距已調整成手機、電腦都好操作。</p>
 
-<h1>新增記錄</h1>
+            <form method="POST">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="type">類型</label>
+                        <select name="type" id="type">
+                            <option value="income">收入</option>
+                            <option value="expense">支出</option>
+                        </select>
+                    </div>
 
-<form method="POST">
-    <label>類型：</label>
-    <select name="type">
-        <option value="income">收入</option>
-        <option value="expense">支出</option>
-    </select>
-    <br><br>
-    <label>日期：</label>
-    <input type="date" name="created_at" id="dateInput">
-    <br><br>
-    <label>分類：</label>
-    <select name="category">
-        <option value="餐飲">餐飲</option>
-        <option value="材料">材料</option>
-        <option value="房租">房租</option>
-        <option value="薪資">薪資</option>
-        <option value="其他">其他</option>
-    </select>
-    <br><br>
+                    <div class="field">
+                        <label for="dateInput">日期</label>
+                        <input type="date" name="created_at" id="dateInput">
+                    </div>
 
-    <label>金額：</label>
-    <input type="number" name="amount" id="timeInput">
-    <br><br>
+                    <div class="field">
+                        <label for="category">分類</label>
+                        <select name="category" id="category">
+                            <option value="餐飲">餐飲</option>
+                            <option value="材料">材料</option>
+                            <option value="房租">房租</option>
+                            <option value="薪資">薪資</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
 
-    <label>備註：</label>
-    <input type="text" name="note">
-    <br><br>
+                    <div class="field">
+                        <label for="amount">金額</label>
+                        <input type="number" name="amount" id="amount" placeholder="請輸入金額">
+                    </div>
 
-    <button type="submit">送出</button>
-</form>
+                    <div class="field-full">
+                        <label for="note">備註</label>
+                        <input type="text" name="note" id="note" placeholder="例如：材料採購、客戶付款">
+                    </div>
+                </div>
 
-<a href="/">回首頁</a>
-<script>
-const now = new Date();
-now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">送出</button>
+                    <a href="/" class="btn btn-secondary">回首頁</a>
+                </div>
+            </form>
+        </div>
+    </div>
 
-document.getElementById("timeInput").value = now.toISOString().slice(0,16);
-</script>
+    <script>
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('dateInput').value = today;
+    </script>
 </body>
 </html>
