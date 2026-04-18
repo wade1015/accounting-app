@@ -1,64 +1,268 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>預約系統</title>
+    <style>
+        :root {
+            --bg: #f7f1e8;
+            --card: #fffdf9;
+            --text: #4b4036;
+            --muted: #8a7f74;
+            --border: #e5d8c7;
+            --accent: #b08968;
+            --accent-dark: #8f6b4f;
+            --danger: #c4867d;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
+            padding: 20px 12px 36px;
+        }
+
+        .page {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(111, 88, 63, 0.08);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 3vw, 2.3rem);
+            margin-bottom: 8px;
+        }
+
+        .subtitle,
+        .error-text {
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+        }
+
+        .error-text {
+            color: #b85c50;
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .field,
+        .field-full {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field-full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input,
+        button,
+        a {
+            font: inherit;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--text);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(176, 137, 104, 0.15);
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 46px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: none;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover { background: var(--accent-dark); }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover { background: #efe4d7; }
+
+        .table-wrap {
+            overflow-x: auto;
+            border-radius: 16px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 720px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        th {
+            background: #efe4d7;
+        }
+
+        .delete-link {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: #efd7d4;
+            color: var(--danger);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .delete-link:hover {
+            background: #e7c2be;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 14px 10px 24px;
+            }
+
+            .card {
+                padding: 18px;
+                border-radius: 16px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions .btn {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="page">
+        <section class="card">
+            <h1>預約系統</h1>
+            <p class="subtitle">調整成大按鈕、大輸入框與可橫向捲動表格，手機預約操作也會更順。</p>
 
-<h1>預約系統</h1>
+            {% if error %}
+            <p class="error-text">{{ error }}</p>
+            {% endif %}
 
-<form method="POST">
-    <label>客戶名稱：</label>
-    <input type="text" name="customer"><br><br>
+            <form method="POST">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="customer">客戶名稱</label>
+                        <input type="text" name="customer" id="customer" placeholder="請輸入客戶名稱">
+                    </div>
 
-    <label>日期：</label>
-    <input type="date" name="date" id="dateInput"><br><br>
+                    <div class="field">
+                        <label for="dateInput">日期</label>
+                        <input type="date" name="date" id="dateInput">
+                    </div>
+
+                    <div class="field">
+                        <label for="time">時間</label>
+                        <input type="time" name="time" id="time">
+                    </div>
+
+                    <div class="field-full">
+                        <label for="note">備註</label>
+                        <input type="text" name="note" id="note" placeholder="例如：款式、服務內容、注意事項">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">新增預約</button>
+                    <a href="/" class="btn btn-secondary">回記帳首頁</a>
+                </div>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>預約列表</h2>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>客戶</th>
+                        <th>日期</th>
+                        <th>時間</th>
+                        <th>備註</th>
+                        <th>操作</th>
+                    </tr>
+                    {% for b in bookings %}
+                    <tr>
+                        <td>{{ b[1] }}</td>
+                        <td>{{ b[2] }}</td>
+                        <td>{{ b[3] }}</td>
+                        <td>{{ b[4] }}</td>
+                        <td><a href="/delete_booking/{{ b[0] }}" class="delete-link">刪除</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </section>
+    </div>
+
     <script>
-    document.getElementById("dateInput").value = new Date().toISOString().split('T')[0];
+        document.getElementById('dateInput').value = new Date().toISOString().split('T')[0];
     </script>
-
-    <label>時間：</label>
-    <input type="time" name="time"><br><br>
-
-    <label>備註：</label>
-    <input type="text" name="note"><br><br>
-
-    <button type="submit">新增預約</button>
-</form>
-
-<hr>
-
-<h2>預約列表</h2>
-
-<table border="1">
-<tr>
-    <th>客戶</th>
-    <th>日期</th>
-    <th>時間</th>
-    <th>備註</th>
-    <th>操作</th>
-</tr>
-
-{% if error %}
-<p style="color:red;">{{ error }}</p>
-{% endif %}
-
-{% for b in bookings %}
-<tr>
-    <td>{{ b[1] }}</td>
-    <td>{{ b[2] }}</td>
-    <td>{{ b[3] }}</td>
-    <td>{{ b[4] }}</td>
-    <td>
-        <a href="/delete_booking/{{ b[0] }}">刪除</a>
-    </td>
-</tr>
-{% endfor %}
-
-</table>
-
-<a href="/">回記帳首頁</a>
-
 </body>
 </html>
