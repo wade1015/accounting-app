@@ -112,9 +112,19 @@ def index():
 
     income = sum(r.amount for r in data if r.type == "income")
     expense = sum(r.amount for r in data if r.type == "expense")
+    months = []
+    income_list = []
+    expense_list = []
 
-    return render_template("index.html", data=data, income=income, expense=expense)
-
+    return render_template(
+        "index.html",
+        data=data,
+        income=income,
+        expense=expense,
+        months=months,
+        income_list=income_list,
+        expense_list=expense_list
+    )
 
 # =========================
 # ➕ 新增記帳
