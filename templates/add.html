@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <title>新增記帳</title>
     <style>
         :root {
@@ -171,7 +172,7 @@
 
                     <div class="field">
                         <label for="dateInput">日期</label>
-                        <input type="date" name="created_at" id="dateInput">
+                        <input type="text" name="created_at" id="dateInput" placeholder="請選擇日期">
                     </div>
 
                     <div class="field">
@@ -204,9 +205,12 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('dateInput').value = today;
+    flatpickr("#dateInput", {
+        dateFormat: "Y-m-d",
+        defaultDate: "today"
+    });
     </script>
 </body>
 </html>
