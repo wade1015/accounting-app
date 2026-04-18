@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>預約系統</title>
+
+    <!-- flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <style>
         :root {
             --bg: #f7f1e8;
@@ -16,7 +20,9 @@
             --danger: #c4867d;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
@@ -56,6 +62,7 @@
 
         .subtitle {
             color: var(--muted);
+            line-height: 1.7;
         }
 
         .error-text {
@@ -69,11 +76,17 @@
             gap: 16px;
         }
 
+        .form-grid > * {
+            min-width: 0;
+        }
+
         .field,
         .field-full {
             display: flex;
             flex-direction: column;
             gap: 8px;
+            min-width: 0;
+            width: 100%;
         }
 
         .field-full {
@@ -91,17 +104,18 @@
             font: inherit;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
             min-width: 0;
             max-width: 100%;
-            padding: 12px 14px;
+            padding: 13px 14px;
             border-radius: 12px;
             border: 1px solid var(--border);
             background: #fff;
             color: var(--text);
         }
-        
+
         input:focus,
         select:focus {
             outline: none;
@@ -134,7 +148,9 @@
             color: #fff;
         }
 
-        .btn-primary:hover { background: var(--accent-dark); }
+        .btn-primary:hover {
+            background: var(--accent-dark);
+        }
 
         .btn-secondary {
             background: transparent;
@@ -142,7 +158,9 @@
             border: 1px solid var(--border);
         }
 
-        .btn-secondary:hover { background: #efe4d7; }
+        .btn-secondary:hover {
+            background: #efe4d7;
+        }
 
         .table-wrap {
             overflow-x: auto;
@@ -180,6 +198,27 @@
             background: #e7c2be;
         }
 
+        /* flatpickr 視覺微調 */
+        .flatpickr-calendar {
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(111, 88, 63, 0.12);
+        }
+
+        .flatpickr-day.selected,
+        .flatpickr-day.startRange,
+        .flatpickr-day.endRange {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .flatpickr-time input:hover,
+        .flatpickr-time .flatpickr-am-pm:hover,
+        .flatpickr-time input:focus,
+        .flatpickr-time .flatpickr-am-pm:focus {
+            background: #f5ede3;
+        }
+
         @media (max-width: 640px) {
             body {
                 padding: 14px 10px 24px;
@@ -197,6 +236,11 @@
             .actions .btn {
                 width: 100%;
             }
+
+            input,
+            select {
+                min-height: 48px;
+            }
         }
     </style>
 </head>
@@ -204,7 +248,6 @@
     <div class="page">
         <section class="card">
             <h1>預約系統</h1>
-            <p class="subtitle">調整成大按鈕、大輸入框與可橫向捲動表格，手機預約操作也會更順。</p>
 
             {% if error %}
             <p class="error-text">{{ error }}</p>
@@ -214,23 +257,18 @@
                 <div class="form-grid">
                     <div class="field">
                         <label for="customer">客戶名稱</label>
-                        <input type="text" name="customer" id="customer" placeholder="請輸入客戶名稱">
+                        <input type="text" name="customer" id="customer" placeholder="請輸入客戶名稱" required>
                     </div>
 
                     <div class="field">
                         <label for="dateInput">日期</label>
-                        <input type="date" name="created_at" id="dateInput">
+                        <input type="text" name="date" id="dateInput" placeholder="請選擇日期" required>
                     </div>
 
                     <div class="field">
                         <label for="time">時間</label>
                         <select name="time" id="time" required>
                             <option value="">請選擇時間</option>
-                            <option value="06:30">上午 06:30</option>
-                            <option value="07:00">上午 07:00</option>
-                            <option value="07:30">上午 07:30</option>
-                            <option value="08:00">上午 08:00</option>
-                            <option value="08:30">上午 08:30</option>
                             <option value="09:00">上午 09:00</option>
                             <option value="09:30">上午 09:30</option>
                             <option value="10:00">上午 10:00</option>
@@ -300,8 +338,14 @@
         </section>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        document.getElementById('dateInput').value = new Date().toISOString().split('T')[0];
+        flatpickr("#dateInput", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            defaultDate: "today",
+            disableMobile: false
+        });
     </script>
 </body>
 </html>
