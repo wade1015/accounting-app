@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>記帳列表</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f4ec;
+            font-family: Arial, "Microsoft JhengHei", sans-serif;
+        }
+
+        .page-box {
+            background-color: #fffdf9;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .page-title {
+            color: #5c4b3b;
+            font-weight: bold;
+        }
+
+        .table-responsive {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h1 class="page-title">📋 記帳列表</h1>
+        <a href="/dashboard" class="btn btn-secondary">回主控台</a>
+    </div>
+
+    <div class="page-box">
+
+        <div class="mb-3">
+            <a href="/add" class="btn btn-primary">新增記帳</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>日期</th>
+                        <th>類型</th>
+                        <th>金額</th>
+                        <th>備註</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 之後資料庫資料會放這裡 -->
+                    <tr>
+                        <td>2026-04-27</td>
+                        <td>收入</td>
+                        <td>1000</td>
+                        <td>範例資料</td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-warning">編輯</a>
+                            <a href="#" class="btn btn-sm btn-danger">刪除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

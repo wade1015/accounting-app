@@ -2,350 +2,101 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>預約系統</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- flatpickr -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        :root {
-            --bg: #f7f1e8;
-            --card: #fffdf9;
-            --text: #4b4036;
-            --muted: #8a7f74;
-            --border: #e5d8c7;
-            --accent: #b08968;
-            --accent-dark: #8f6b4f;
-            --danger: #c4867d;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
-            background: var(--bg);
-            color: var(--text);
-            font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
-            padding: 20px 12px 36px;
+            background-color: #f8f4ec;
+            font-family: Arial, "Microsoft JhengHei", sans-serif;
         }
 
-        .page {
-            max-width: 1080px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
+        .page-box {
+            background-color: #fffdf9;
             border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(111, 88, 63, 0.08);
-            padding: 24px;
-            margin-bottom: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        h1, h2 {
-            margin-top: 0;
+        .page-title {
+            color: #5c4b3b;
+            font-weight: bold;
         }
 
-        h1 {
-            font-size: clamp(1.8rem, 3vw, 2.3rem);
-            margin-bottom: 8px;
-        }
-
-        .subtitle,
-        .error-text {
-            margin-bottom: 20px;
-        }
-
-        .subtitle {
-            color: var(--muted);
-            line-height: 1.7;
-        }
-
-        .error-text {
-            color: #b85c50;
-            font-weight: 600;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 16px;
-        }
-
-        .form-grid > * {
-            min-width: 0;
-        }
-
-        .field,
-        .field-full {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            min-width: 0;
-            width: 100%;
-        }
-
-        .field-full {
-            grid-column: 1 / -1;
-        }
-
-        label {
-            font-weight: 600;
-        }
-
-        input,
-        select,
-        button,
-        a {
-            font: inherit;
-        }
-
-        input,
-        select {
-            width: 100%;
-            min-width: 0;
-            max-width: 100%;
-            padding: 13px 14px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: #fff;
-            color: var(--text);
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(176, 137, 104, 0.15);
-        }
-
-        .actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 24px;
-        }
-
-        .btn {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 46px;
-            padding: 12px 18px;
-            border-radius: 12px;
-            border: none;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-dark);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: #efe4d7;
-        }
-
-        .table-wrap {
-            overflow-x: auto;
-            border-radius: 16px;
-        }
-
-        table {
-            width: 100%;
-            min-width: 720px;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 14px 12px;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-            white-space: nowrap;
-        }
-
-        th {
-            background: #efe4d7;
-        }
-
-        .delete-link {
-            display: inline-block;
-            padding: 8px 12px;
-            border-radius: 10px;
-            background: #efd7d4;
-            color: var(--danger);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .delete-link:hover {
-            background: #e7c2be;
-        }
-
-        /* flatpickr 視覺微調 */
-        .flatpickr-calendar {
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 30px rgba(111, 88, 63, 0.12);
-        }
-
-        .flatpickr-day.selected,
-        .flatpickr-day.startRange,
-        .flatpickr-day.endRange {
-            background: var(--accent);
-            border-color: var(--accent);
-        }
-
-        .flatpickr-time input:hover,
-        .flatpickr-time .flatpickr-am-pm:hover,
-        .flatpickr-time input:focus,
-        .flatpickr-time .flatpickr-am-pm:focus {
-            background: #f5ede3;
-        }
-
-        @media (max-width: 640px) {
-            body {
-                padding: 14px 10px 24px;
-            }
-
-            .card {
-                padding: 18px;
-                border-radius: 16px;
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .actions .btn {
-                width: 100%;
-            }
-
-            input,
-            select {
-                min-height: 48px;
-            }
+        .schedule-card {
+            border-radius: 15px;
+            background-color: #ffffff;
+            padding: 15px;
+            border: 1px solid #e5ddcf;
         }
     </style>
 </head>
 <body>
-    <div class="page">
-        <section class="card">
-            <h1>預約系統</h1>
 
-            {% if error %}
-            <p class="error-text">{{ error }}</p>
-            {% endif %}
+<div class="container py-4">
 
-            <form method="POST">
-                <div class="form-grid">
-                    <div class="field">
-                        <label for="customer">客戶名稱</label>
-                        <input type="text" name="customer" id="customer" placeholder="請輸入客戶名稱" required>
-                    </div>
-
-                    <div class="field">
-                        <label for="dateInput">日期</label>
-                        <input type="text" name="date" id="dateInput" placeholder="請選擇日期" required>
-                    </div>
-
-                    <div class="field">
-                        <label for="time">時間</label>
-                        <select name="time" id="time" required>
-                            <option value="">請選擇時間</option>
-                            <option value="09:00">上午 09:00</option>
-                            <option value="09:30">上午 09:30</option>
-                            <option value="10:00">上午 10:00</option>
-                            <option value="10:30">上午 10:30</option>
-                            <option value="11:00">上午 11:00</option>
-                            <option value="11:30">上午 11:30</option>
-                            <option value="12:00">中午 12:00</option>
-                            <option value="12:30">中午 12:30</option>
-                            <option value="13:00">下午 01:00</option>
-                            <option value="13:30">下午 01:30</option>
-                            <option value="14:00">下午 02:00</option>
-                            <option value="14:30">下午 02:30</option>
-                            <option value="15:00">下午 03:00</option>
-                            <option value="15:30">下午 03:30</option>
-                            <option value="16:00">下午 04:00</option>
-                            <option value="16:30">下午 04:30</option>
-                            <option value="17:00">下午 05:00</option>
-                            <option value="17:30">下午 05:30</option>
-                            <option value="18:00">下午 06:00</option>
-                            <option value="18:30">下午 06:30</option>
-                            <option value="19:00">晚上 07:00</option>
-                            <option value="19:30">晚上 07:30</option>
-                            <option value="20:00">晚上 08:00</option>
-                            <option value="20:30">晚上 08:30</option>
-                            <option value="21:00">晚上 09:00</option>
-                            <option value="21:30">晚上 09:30</option>
-                            <option value="22:00">晚上 10:00</option>
-                            <option value="22:30">晚上 10:30</option>
-                        </select>
-                    </div>
-
-                    <div class="field-full">
-                        <label for="note">備註</label>
-                        <input type="text" name="note" id="note" placeholder="例如：款式、服務內容、注意事項">
-                    </div>
-                </div>
-
-                <div class="actions">
-                    <button type="submit" class="btn btn-primary">新增預約</button>
-                    <a href="/" class="btn btn-secondary">回記帳首頁</a>
-                </div>
-            </form>
-        </section>
-
-        <section class="card">
-            <h2>預約列表</h2>
-            <div class="table-wrap">
-                <table>
-                    <tr>
-                        <th>客戶</th>
-                        <th>日期</th>
-                        <th>時間</th>
-                        <th>備註</th>
-                        <th>操作</th>
-                    </tr>
-                    {% for b in bookings %}
-                    <tr>
-                        <td>{{ b[1] }}</td>
-                        <td>{{ b[2] }}</td>
-                        <td>{{ b[3] }}</td>
-                        <td>{{ b[4] }}</td>
-                        <td><a href="/delete_booking/{{ b[0] }}" class="delete-link">刪除</a></td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
-        </section>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h1 class="page-title">📅 預約系統</h1>
+        <a href="/dashboard" class="btn btn-secondary">回主控台</a>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr("#dateInput", {
-            dateFormat: "Y-m-d",
-            minDate: "today",
-            defaultDate: "today",
-            disableMobile: false
-        });
-    </script>
+    <div class="page-box">
+
+        <div class="row g-3 mb-4">
+            <div class="col-12 col-md-4">
+                <div class="schedule-card">
+                    <h5>今日預約</h5>
+                    <p class="mb-0">目前先放範例資料，之後可改成資料庫統計。</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="schedule-card">
+                    <h5>本週預約</h5>
+                    <p class="mb-0">之後可顯示本週預約總數。</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="schedule-card">
+                    <h5>客戶預約頁</h5>
+                    <a href="/booking/public" class="btn btn-outline-primary btn-sm">前往客戶預約頁</a>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="mb-3">預約列表</h4>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>日期</th>
+                        <th>時間</th>
+                        <th>客戶名稱</th>
+                        <th>服務項目</th>
+                        <th>備註</th>
+                        <th>狀態</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2026-04-27</td>
+                        <td>10:30</td>
+                        <td>王小姐</td>
+                        <td>美甲 / 服務項目範例</td>
+                        <td>範例備註</td>
+                        <td><span class="badge bg-success">已預約</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
 </body>
 </html>
