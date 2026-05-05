@@ -417,4 +417,4 @@ def booking_public():
     return render_template("booking_public.html", t=t)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
